@@ -10,8 +10,8 @@ import {
 import { FastifyRequest } from 'fastify';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Authorize } from '../core/decorators/authorize.decorator';
-import { ImageCaptchaDto, LoginInfoDto } from './login.dto';
-import { ImageCaptcha, LoginToken } from './login.class';
+import { captchaDto, ImageCaptchaDto, LoginInfoDto } from './login.dto';
+import { captchaCode, ImageCaptcha, LoginToken } from './login.class';
 import { LoginService } from './login.service';
 import { LogDisabled } from '../core/decorators/log-disabled.decorator';
 import { UtilService } from 'src/shared/services/util.service';
@@ -29,6 +29,17 @@ export class LoginController {
   @Authorize()
   async captchaByImg(@Query() dto: ImageCaptchaDto): Promise<ImageCaptcha> {
     return await this.loginService.createImageCaptcha(dto);
+  }
+
+  @ApiOperation({
+    summary: '获取缓存验证码',
+  })
+  @ApiOkResponse({ type: captchaCode })
+  @Post('rediscode')
+  @Authorize()
+  async getCaptcha(@Body() dto: captchaDto): Promise<any> {
+    console.log('dto :>>', JSON.stringify(dto));
+    return this.loginService.getCaptchaCode(dto);
   }
 
   @ApiOperation({

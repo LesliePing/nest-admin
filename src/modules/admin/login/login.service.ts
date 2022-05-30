@@ -48,7 +48,17 @@ export class LoginService {
       .set(`admin:captcha:img:${result.id}`, svg.text, 'EX', 60 * 5);
     return result;
   }
-
+  /**
+   * 获取redis验证码
+   * @param captchaId 验证码 id 号码
+   * @returns 验证码
+   */
+  async getCaptchaCode(captchaCode) {
+    const result = await this.redisService
+      .getRedis()
+      .get(`admin:captcha:img:${captchaCode.captchaId}`);
+    return { number: result };
+  }
   /**
    * 校验验证码
    */
@@ -56,6 +66,8 @@ export class LoginService {
     const result = await this.redisService
       .getRedis()
       .get(`admin:captcha:img:${id}`);
+    console.log('result :>>', result);
+
     if (isEmpty(result) || code.toLowerCase() !== result.toLowerCase()) {
       throw new ApiException(10002);
     }

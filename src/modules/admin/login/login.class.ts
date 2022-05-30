@@ -13,6 +13,11 @@ export class ImageCaptcha {
   id: string;
 }
 
+export class captchaCode {
+  @ApiProperty({ description: 'Redis验证码' })
+  captchaId: string;
+}
+
 export class LoginToken {
   @ApiProperty({ description: 'JWT身份Token' })
   token: string;

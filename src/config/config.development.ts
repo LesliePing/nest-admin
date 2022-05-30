@@ -26,8 +26,8 @@ export default {
     host: '127.0.0.1',
     port: 3306,
     username: 'root',
-    password: 'root',
-    database: 'nest-admin',
+    password: '123456789',
+    database: 'sf-admin',
     synchronize: true,
     logging: false,
     timezone: '+08:00', // 东八区
