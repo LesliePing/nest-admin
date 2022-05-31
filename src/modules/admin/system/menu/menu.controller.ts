@@ -55,10 +55,10 @@ export class SysMenuController {
   @Post('update')
   async update(@Body() dto: UpdateMenuDto): Promise<void> {
     //
-    if (dto.menuId <= FORBIDDEN_OP_MENU_ID_INDEX) {
-      // 系统内置功能不提供删除
-      throw new ApiException(10016);
-    }
+    // if (dto.menuId <= FORBIDDEN_OP_MENU_ID_INDEX) {
+    //   // 系统内置功能不提供删除
+    //   throw new ApiException(10016);
+    // }
     // check
     await this.menuService.check(dto);
     if (dto.parentId === -1) {
@@ -80,10 +80,10 @@ export class SysMenuController {
   @Post('delete')
   async delete(@Body() dto: DeleteMenuDto): Promise<void> {
     // 68为内置init.sql中插入最后的索引编号
-    if (dto.menuId <= FORBIDDEN_OP_MENU_ID_INDEX) {
-      // 系统内置功能不提供删除
-      throw new ApiException(10016);
-    }
+    // if (dto.menuId <= FORBIDDEN_OP_MENU_ID_INDEX) {
+    //   // 系统内置功能不提供删除
+    //   throw new ApiException(10016);
+    // }
     // 如果有子目录，一并删除
     const childMenus = await this.menuService.findChildMenus(dto.menuId);
     await this.menuService.deleteMenuItem(
